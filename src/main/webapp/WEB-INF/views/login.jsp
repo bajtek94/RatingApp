@@ -30,8 +30,7 @@
 
 <div class="container">
 
-    <img class="img-responsive center-block"
-         src="${contextPath}/resources/img/Logo.png"  alt="Logo" style="margin-bottom: -20px">
+    <a href="welcome"><img class="img-responsive center-block" src="${contextPath}/resources/img/Logo.png"  alt="Logo"></a>
     <form method="POST" action="${contextPath}/login" class="form-signin">
         <h4 class="form-heading" style="text-align: center; color: #AAAAAA">Log in</h4>
 

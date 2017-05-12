@@ -15,8 +15,16 @@ CREATE TABLE `category` (
 -- Dumping data for table `role`
 --
 
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
 LOCK TABLES `role` WRITE;
 INSERT INTO `role` VALUES (1,'ROLE_USER');
+INSERT INTO `role` VALUES (2,'ROLE_ADMIN');
 UNLOCK TABLES;
 
 --
