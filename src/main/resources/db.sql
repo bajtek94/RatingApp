@@ -1,54 +1,75 @@
 CREATE DATABASE  IF NOT EXISTS `ratingapp`;
 USE `ratingapp`;
---
--- Table structure for table `role`
---
-
+# --------------------------------- CATEGORY -------------------------
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `description` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `role`
---
-
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+# --------------------------------- ROLE -------------------------
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+# --------------------------------- ROLE-INSERTS -------------------------
 LOCK TABLES `role` WRITE;
 INSERT INTO `role` VALUES (1,'ROLE_USER');
 INSERT INTO `role` VALUES (2,'ROLE_ADMIN');
 UNLOCK TABLES;
-
---
--- Table structure for table `user`
---
-
+# --------------------------------- USER -------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `user_role`
---
-
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+# --------------------------------- POST -------------------------
+DROP TABLE IF EXISTS `post`;
+CREATE TABLE `post` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `likes` int(11) UNSIGNED NOT NULL,
+  `dislikes` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_post_userid` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+# --------------------------------- USER_ROLE -------------------------
 DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE `user_role` (
-  `user_id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `role_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`user_id`,`role_id`),
   KEY `fk_user_role_roleid_idx` (`role_id`),
   CONSTRAINT `fk_user_role_roleid` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_user_role_userid` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+# --------------------------------- FRIENDS -------------------------
+DROP TABLE IF EXISTS `friends`;
+CREATE TABLE `friends` (
+  `userOne_id` int(11) UNSIGNED NOT NULL,
+  `userTwo_id` int(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`userOne_id`,`userTwo_id`),
+  KEY `fk_friends_userid_idx` (`userOne_id`),
+  CONSTRAINT `fk_friends_useroneid` FOREIGN KEY (`userOne_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_friends_usertwoid` FOREIGN KEY (`userTwo_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+# --------------------------------- POST_CATEGORY -------------------------
+DROP TABLE IF EXISTS `post_category`;
+CREATE TABLE `post_category` (
+  `post_id` int(11) UNSIGNED NOT NULL,
+  `category_id` int(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`post_id`,`category_id`),
+  KEY `fk_post_category_categoryid_idx` (`category_id`),
+  CONSTRAINT `fk_post_category_postid` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_post_category_categoryid` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
