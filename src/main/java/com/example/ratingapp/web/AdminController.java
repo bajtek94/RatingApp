@@ -1,9 +1,13 @@
 package com.example.ratingapp.web;
 
+import com.example.ratingapp.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Created by Bajtek on 12.05.2017.
@@ -11,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value = {"/admin"})
 public class AdminController {
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = {"/", "/welcome"})
     public String welcome(Model model){
@@ -32,9 +39,16 @@ public class AdminController {
         return"admin_listPosts";
     }
 
-    @RequestMapping(value = {"/listUsers"})
+    @RequestMapping(value = {"/listUsers"}, method = RequestMethod.GET)
     public String listUsers(Model model){
+        model.addAttribute("userList", userService.getUsersList());
         return"admin_listUsers";
+    }
+
+    @RequestMapping(value = {"/deleteUser-{userId}"}, method = RequestMethod.GET)
+    public String deleteUser(@PathVariable String userId) {
+        userService.deleteUserById(userId);
+        return "redirect:/admin/listUsers";
     }
 
 }

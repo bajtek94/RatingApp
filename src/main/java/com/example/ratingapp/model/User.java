@@ -16,6 +16,7 @@ public class User {
     private String lastName;
     private Set<Role> roles;
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
@@ -85,4 +86,6 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+
 }

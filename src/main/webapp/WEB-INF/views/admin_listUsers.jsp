@@ -32,6 +32,53 @@
     <a href="welcome"><img class="img-responsive center-block" src="${contextPath}/resources/img/Logo.png"  alt="Logo"></a>
     <h4 class="form-heading" style="text-align: center; color: #AAAAAA">List of users:</h4>
 
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+                <div class="row placeholders">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>Username</th>
+                                <th>Name</th>
+                                <th>Last name</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                                <%-- <sec:authorize access="hasRole('ROLE_ADMIN')"><th>#</th></sec:authorize> --%>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${userList}" var="user">
+                                <tr>
+                                    <td>${user.id}</td>
+                                    <td>${user.username}</td>
+                                    <td>${user.name}</td>
+                                    <td>${user.lastName}</td>
+                                    <td>${user.email}</td>
+                                    <td><a href="<c:url value='/admin/deleteUser-${user.id}' />" class="btn btn-danger">Delete</a></td>
+                                        <%-- <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                            <td><a href="<c:url value='/admin/editUser-${user.id}' />" class="btn btn-success">Edit</a></td>
+                                        </sec:authorize> --%>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- /placeholders -->
+            </div>
+            <!-- /main -->
+        </div>
+    </div>
+    <!-- /container -->
+
+
+
 </div>
 <!-- /container -->
 <%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>--%>
