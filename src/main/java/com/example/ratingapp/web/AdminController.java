@@ -17,4 +17,24 @@ public class AdminController {
         return"admin_welcome";
     }
 
+    @RequestMapping(value = {"/findPost"})
+    public String findPost(Model model){
+        return"admin_findPost";
+    }
+
+    @RequestMapping(value = {"/findUser"})
+    public String findUser(Model model){
+        return"admin_findUser";
+    }
+
+    @RequestMapping(value = {"/listPosts"})
+    public String listPosts(Model model){
+        return"admin_listPosts";
+    }
+
+    @RequestMapping(value = {"/listUsers"})
+    public String listUsers(Model model){
+        return"admin_listUsers";
+    }
+
 }
