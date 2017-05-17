@@ -1,6 +1,8 @@
 package com.example.ratingapp.model;
 
 import javax.persistence.*;
+import java.util.Calendar;
+import java.util.Set;
 
 /**
  * Created by Bajtek on 17.05.2017.
@@ -14,6 +16,8 @@ public class Post {
     private Long likes;
     private Long dislikes;
     private Long userId;
+    private Calendar date;
+    private Set<Category> categories;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -64,5 +68,23 @@ public class Post {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Calendar getDate() {
+        return date;
+    }
+
+    public void setDate(Calendar date) {
+        this.date = date;
+    }
+
+    @ManyToMany
+    @JoinTable(name = "post_category", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }

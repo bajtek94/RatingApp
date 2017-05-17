@@ -40,6 +40,7 @@ CREATE TABLE `post` (
   `likes` int(11) UNSIGNED NOT NULL,
   `dislikes` int(11) UNSIGNED NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
+  `date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_post_userid` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

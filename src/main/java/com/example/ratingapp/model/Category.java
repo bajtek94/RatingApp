@@ -1,6 +1,7 @@
 package com.example.ratingapp.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by Bajtek on 17.05.2017.
@@ -12,6 +13,7 @@ public class Category {
     private Long id;
     private String name;
     private String description;
+    private Set<Post> posts;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,5 +39,14 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @ManyToMany(mappedBy = "categories")
+    public Set<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
     }
 }
