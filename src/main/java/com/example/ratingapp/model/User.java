@@ -13,7 +13,7 @@ public class User {
     private String passwordConfirm;
     private String email;
     private String name;
-    private String last_name;
+    private String lastName;
     private Set<Role> roles;
 
     @Id
@@ -77,11 +77,12 @@ public class User {
         this.name = name;
     }
 
-    public String getLast_name() {
-        return last_name;
+    @Column(name = "last_name")
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

@@ -30,12 +30,7 @@
 <div class="container">
 
     <a href="welcome"><img class="img-responsive center-block" src="${contextPath}/resources/img/Logo.png"  alt="Logo"></a>
-    <h4 class="form-heading" style="text-align: center; color: #AAAAAA">Admin Panel</h4>
-    <p><a href="listUsers"><button class="btn btn-lg btn-primary btn-block">List all users</button></a></p>
-    <p><a href="findUser"><button class="btn btn-lg btn-primary btn-block">Find user</button></a></p>
-    <p><a href="listPosts"><button class="btn btn-lg btn-primary btn-block">List all posts</button></a></p>
-    <p><a href="findPost"><button class="btn btn-lg btn-primary btn-block">Find post</button></a></p>
-    <p><a href="${contextPath}/login?logout" style="text-decoration: none"><button class="btn btn-lg btn-danger btn-block" type="button">Logout</button></a></p>
+    <h4 class="form-heading" style="text-align: center; color: #AAAAAA">Find user</h4>
 
 </div>
 <!-- /container -->

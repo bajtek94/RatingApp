@@ -59,21 +59,21 @@
         <spring:bind path="email">
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="email" path="email" class="form-control" placeholder="Email"></form:input>
-                <%--<form:errors path="username"></form:errors>--%>
+                <form:errors path="email"></form:errors>
             </div>
         </spring:bind>
 
         <spring:bind path="name">
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="text" path="name" class="form-control" placeholder="Name"></form:input>
-                    <%--<form:errors path="username"></form:errors>--%>
+                <form:errors path="name"></form:errors>
             </div>
         </spring:bind>
 
-        <spring:bind path="last_name">
+        <spring:bind path="lastName">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="last_name" class="form-control" placeholder="Last name"></form:input>
-                    <%--<form:errors path="username"></form:errors>--%>
+                <form:input type="text" path="lastName" class="form-control" placeholder="Last name"></form:input>
+                <form:errors path="lastName"></form:errors>
             </div>
         </spring:bind>
 
