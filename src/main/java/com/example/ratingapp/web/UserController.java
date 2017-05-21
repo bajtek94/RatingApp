@@ -1,5 +1,6 @@
 package com.example.ratingapp.web;
 
+import com.example.ratingapp.model.Post;
 import com.example.ratingapp.model.User;
 import com.example.ratingapp.validator.UserValidator;
 import com.example.ratingapp.service.SecurityService;
@@ -59,5 +60,11 @@ public class UserController {
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
         return "welcome";
+    }
+
+    @RequestMapping(value = {"/addPhoto"}, method = RequestMethod.GET)
+    public String addPhoto(Model model) {
+        model.addAttribute("postForm", new Post());
+        return "addPhoto";
     }
 }

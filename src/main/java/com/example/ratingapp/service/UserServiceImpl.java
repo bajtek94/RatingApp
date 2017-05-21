@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -63,7 +64,59 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findByFillFields(User user) {
-//        System.out.println("TEST: " + user.getUsername() + ", " + user.getEmail());
-        return userRepository.findByUsernameAndMail(user.getUsername(), user.getEmail());
+        if(user.getUsername() == "" && user.getEmail() == "" && user.getName() == "" && user.getLastName() == "") {
+            return new ArrayList<>();
+        }
+        ///////////// 1 pole wypełnione
+        else if(user.getUsername() == "" && user.getEmail() == "" && user.getName() == "") {
+            return userRepository.findByLastName(user.getLastName());
+        }
+        else if(user.getUsername() == "" && user.getEmail() == "" && user.getLastName() == "") {
+            return userRepository.findByName(user.getName());
+        }
+        else if(user.getUsername() == "" && user.getLastName() == "" && user.getName() == "") {
+            return userRepository.findByEmail(user.getEmail());
+        }
+        else if(user.getLastName() == "" && user.getEmail() == "" && user.getName() == "") {
+            return userRepository.findListByUsername(user.getUsername());
+        }
+        ///////////// 2 pola wypełnione
+        else if(user.getUsername() == "" && user.getEmail() == "") {
+            return userRepository.findByNameAndLastName(user.getName(), user.getLastName());
+        }
+        else if(user.getUsername() == "" && user.getName() == "") {
+            return userRepository.findByEmailAndLastName(user.getEmail(), user.getLastName());
+        }
+        else if(user.getUsername() == "" && user.getLastName() == "") {
+            return userRepository.findByEmailAndName(user.getEmail(), user.getName());
+        }
+        else if(user.getEmail() == "" && user.getName() == "") {
+            return userRepository.findByUsernameAndLastName(user.getUsername(), user.getLastName());
+        }
+        else if(user.getEmail() == "" && user.getLastName() == "") {
+            return userRepository.findByUsernameAndName(user.getUsername(), user.getName());
+        }
+        else if(user.getName() == "" && user.getLastName() == "") {
+            return userRepository.findByUsernameAndEmail(user.getUsername(), user.getEmail());
+        }
+        ///////////// 3 pola wypełnione
+        else if(user.getUsername() == "") {
+            return userRepository.findByEmailNameAndLastName(user.getEmail(), user.getName(), user.getLastName());
+        }
+        else if(user.getEmail() == "") {
+            return userRepository.findByUsernameNameAndLastName(user.getUsername(), user.getName(), user.getLastName());
+        }
+        else if(user.getName() == "") {
+            return userRepository.findByUsernameEmailAndLastName(user.getUsername(), user.getEmail(), user.getLastName());
+        }
+        else if(user.getLastName() == "") {
+            return userRepository.findByUsernameEmailAndName(user.getUsername(), user.getEmail(), user.getName());
+        }
+        ///////////// 4 pola wypełnione
+        else {
+            return userRepository.findByEverything(user.getUsername(), user.getEmail(), user.getName(), user.getLastName());
+        }
+
+
     }
 }
