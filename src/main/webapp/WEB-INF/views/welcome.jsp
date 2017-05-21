@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>3 Col Portfolio - Start Bootstrap Template</title>
+    <title>RateMyPic - Home Page</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
