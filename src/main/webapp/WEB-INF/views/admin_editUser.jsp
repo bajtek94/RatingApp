@@ -30,38 +30,43 @@
 <div class="container">
 
     <a href="welcome"><img class="img-responsive center-block" src="${contextPath}/resources/img/Logo.png"  alt="Logo"></a>
-    <h4 class="form-heading" style="text-align: center; color: #AAAAAA">Find user:</h4>
+    <h4 class="form-heading" style="text-align: center; color: #AAAAAA">Edit user</h4>
 
 
-    <form:form method="POST" modelAttribute="searchForm" class="form-signin">
+    <form:form method="POST" modelAttribute="userForm" class="form-signin">
         <spring:bind path="username">
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="text" path="username" class="form-control" placeholder="Username"
                             autofocus="true"></form:input>
+                <form:errors path="username"></form:errors>
             </div>
         </spring:bind>
 
         <spring:bind path="email">
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="email" path="email" class="form-control" placeholder="Email"></form:input>
+                <form:errors path="email"></form:errors>
             </div>
         </spring:bind>
 
         <spring:bind path="name">
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="text" path="name" class="form-control" placeholder="Name"></form:input>
+                <form:errors path="name"></form:errors>
             </div>
         </spring:bind>
 
         <spring:bind path="lastName">
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="text" path="lastName" class="form-control" placeholder="Last name"></form:input>
+                <form:errors path="lastName"></form:errors>
             </div>
         </spring:bind>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
-        <a href="welcome" style="text-decoration: none"><button class="btn btn-lg btn-danger btn-block" type="button">Cancel</button></a>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Accept changes</button>
+        <a href="listUsers" style="text-decoration: none"><button class="btn btn-lg btn-danger btn-block" type="button">Cancel</button></a>
     </form:form>
+
 
 
 

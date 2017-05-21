@@ -9,8 +9,14 @@ public interface UserService {
 
     User findByUsername(String username);
 
+    User findById(String id);
+
     List<User> getUsersList();
 
     void deleteUserById(String id);
+
+    void updateUser(User userForm);
+
+    List<User> findByFillFields(User user);
 
 }

@@ -60,10 +60,10 @@
                                     <td>${user.name}</td>
                                     <td>${user.lastName}</td>
                                     <td>${user.email}</td>
-                                    <td><a href="<c:url value='/admin/deleteUser-${user.id}' />" class="btn btn-danger">Delete</a></td>
-                                        <%-- <sec:authorize access="hasRole('ROLE_ADMIN')">
-                                            <td><a href="<c:url value='/admin/editUser-${user.id}' />" class="btn btn-success">Edit</a></td>
-                                        </sec:authorize> --%>
+                                    <td>
+                                        <a href="<c:url value='/admin/deleteUser-${user.id}' />" class="btn btn-danger">Delete</a>
+                                        <a href="<c:url value='/admin/editUser-${user.id}' />" class="btn btn-primary">Edit</a>
+                                    </td>
                                 </tr>
                             </c:forEach>
                             </tbody>
