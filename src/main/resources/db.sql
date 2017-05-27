@@ -40,9 +40,11 @@ CREATE TABLE `post` (
   `likes` int(11) UNSIGNED NOT NULL,
   `dislikes` int(11) UNSIGNED NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
-  `date` datetime NOT NULL,
+  `category_id` int(11) UNSIGNED NOT NULL,
+#   `date` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_post_userid` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_post_userid` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_post_categoryid` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 # --------------------------------- USER_ROLE -------------------------
 DROP TABLE IF EXISTS `user_role`;
@@ -53,24 +55,4 @@ CREATE TABLE `user_role` (
   KEY `fk_user_role_roleid_idx` (`role_id`),
   CONSTRAINT `fk_user_role_roleid` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_user_role_userid` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-# --------------------------------- FRIENDS -------------------------
-DROP TABLE IF EXISTS `friends`;
-CREATE TABLE `friends` (
-  `userOne_id` int(11) UNSIGNED NOT NULL,
-  `userTwo_id` int(11) UNSIGNED NOT NULL,
-  PRIMARY KEY (`userOne_id`,`userTwo_id`),
-  KEY `fk_friends_userid_idx` (`userOne_id`),
-  CONSTRAINT `fk_friends_useroneid` FOREIGN KEY (`userOne_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_friends_usertwoid` FOREIGN KEY (`userTwo_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-# --------------------------------- POST_CATEGORY -------------------------
-DROP TABLE IF EXISTS `post_category`;
-CREATE TABLE `post_category` (
-  `post_id` int(11) UNSIGNED NOT NULL,
-  `category_id` int(11) UNSIGNED NOT NULL,
-  PRIMARY KEY (`post_id`,`category_id`),
-  KEY `fk_post_category_categoryid_idx` (`category_id`),
-  CONSTRAINT `fk_post_category_postid` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_post_category_categoryid` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

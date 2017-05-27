@@ -2,6 +2,8 @@ package com.example.ratingapp.web;
 
 import com.example.ratingapp.model.Post;
 import com.example.ratingapp.model.User;
+import com.example.ratingapp.service.PostService;
+import com.example.ratingapp.validator.PostValidator;
 import com.example.ratingapp.validator.UserValidator;
 import com.example.ratingapp.service.SecurityService;
 import com.example.ratingapp.service.UserService;
@@ -17,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserController {
     @Autowired
     private UserService userService;
-
+//    @Autowired
+//    private PostService postService;
     @Autowired
     private SecurityService securityService;
-
     @Autowired
     private UserValidator userValidator;
+//    @Autowired
+//    private PostValidator postValidator;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -67,4 +71,37 @@ public class UserController {
         model.addAttribute("postForm", new Post());
         return "addPhoto";
     }
+
+    @RequestMapping(value = {"/addPhoto"}, method = RequestMethod.POST)
+    public String addPhotoPost(@ModelAttribute("postForm") Post postForm, BindingResult bindingResult, Model model) {
+//        postValidator.validate(postForm, bindingResult);
+//        postService.save(postForm);
+        return "welcome";
+    }
+
+//    @RequestMapping(value = "/admin/addEvent", method = RequestMethod.POST)
+//    public String adminAddEvent(@ModelAttribute("eventForm") Event eventForm, BindingResult bindingResult, Model model,
+//                                @RequestParam(value = "img") CommonsMultipartFile[] img) throws IOException {
+//        eventValidator.setEditable(false);
+//        eventValidator.validate(eventForm, bindingResult);
+//
+//        if (bindingResult.hasErrors()) {
+//            model.addAttribute("gunTypeList", eventService.getListOfGuns());
+//            model.addAttribute("refereeList", refereeService.getListOfReferees());
+//            return "/admin/addEvent";
+//        }
+//
+//        if (img != null && img.length > 0) {
+//            for (CommonsMultipartFile aFile : img) {
+//                eventForm.setImg(aFile.getBytes());
+//            }
+//        }
+//
+//        eventService.save(eventForm);
+//
+//        return "redirect:/admin/eventList";
+//    }
+
+
+
 }

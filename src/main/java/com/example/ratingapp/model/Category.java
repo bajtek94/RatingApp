@@ -41,7 +41,7 @@ public class Category {
         this.description = description;
     }
 
-    @ManyToMany(mappedBy = "categories")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     public Set<Post> getPosts() {
         return posts;
     }

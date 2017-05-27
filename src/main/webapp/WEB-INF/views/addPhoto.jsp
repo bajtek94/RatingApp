@@ -56,19 +56,19 @@
             </div>
         </spring:bind>
 
-        <spring:bind path="img">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="file" path="img" name="img" class="form-control"></form:input>
-                <c:set var="imageError">
-                    <form:errors path="img" />
-                </c:set>
-                <c:if test="${not empty imageError}">
-                    <div class="alert alert-danger" role="alert" style="margin-top: 10px;">
-                        <form:errors path="img"></form:errors>
-                    </div>
-                </c:if>
-            </div>
-        </spring:bind>
+        <%--<spring:bind path="img">--%>
+            <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
+                <%--<form:input type="file" path="img" name="img" class="form-control"></form:input>--%>
+                <%--<c:set var="imageError">--%>
+                    <%--<form:errors path="img" />--%>
+                <%--</c:set>--%>
+                <%--<c:if test="${not empty imageError}">--%>
+                    <%--<div class="alert alert-danger" role="alert" style="margin-top: 10px;">--%>
+                        <%--<form:errors path="img"></form:errors>--%>
+                    <%--</div>--%>
+                <%--</c:if>--%>
+            <%--</div>--%>
+        <%--</spring:bind>--%>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
         <a href="welcome" style="text-decoration: none"><button class="btn btn-lg btn-danger btn-block" type="button">Cancel</button></a>

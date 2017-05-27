@@ -13,12 +13,13 @@ public class Post {
     private Long id;
     private String title;
     private String description;
-    private S
-    private Long likes;
-    private Long dislikes;
-    private Long userId;
-    private Calendar date;
-    private Set<Category> categories;
+    private int likes;
+    private int dislikes;
+    @Column(name = "user_id")
+    private User user;
+//    private Calendar date;
+    @Column(name = "category_id")
+    private Category category;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,46 +47,39 @@ public class Post {
         this.description = description;
     }
 
-    public Long getLikes() {
+    public int getLikes() {
         return likes;
     }
 
-    public void setLikes(Long likes) {
+    public void setLikes(int likes) {
         this.likes = likes;
     }
 
-    public Long getDislikes() {
+    public int getDislikes() {
         return dislikes;
     }
 
-    public void setDislikes(Long dislikes) {
+    public void setDislikes(int dislikes) {
         this.dislikes = dislikes;
     }
 
-    @Column(name = "user_id")
-    public Long getUserId() {
-        return userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Calendar getDate() {
-        return date;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    public Category getCategory() {
+        return category;
     }
 
-    public void setDate(Calendar date) {
-        this.date = date;
-    }
-
-    @ManyToMany
-    @JoinTable(name = "post_category", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

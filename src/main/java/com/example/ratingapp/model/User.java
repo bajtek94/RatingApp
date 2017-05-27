@@ -15,6 +15,7 @@ public class User {
     private String name;
     private String lastName;
     private Set<Role> roles;
+    private Set<Post> posts;
 
 
     @Id
@@ -87,5 +88,12 @@ public class User {
         this.lastName = lastName;
     }
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    public Set<Post> getPosts() {
+        return posts;
+    }
 
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
+    }
 }
