@@ -49,12 +49,23 @@
             </div>
         </spring:bind>
 
-        <spring:bind path="categories">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="categories" class="form-control" placeholder="Categories"></form:input>
-                <%--<form:errors path="name"></form:errors>--%>
-            </div>
-        </spring:bind>
+
+        <%--<spring:bind path="category">--%>
+            <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
+                <%--<form:select path="category" class="form-control" >--%>
+                    <%--<form:options items="${categoryList}" itemValue="id" itemLabel="name" />--%>
+                <%--</form:select>--%>
+
+                <%--&lt;%&ndash;<c:set var="categoryError">&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;<form:errors path="category" />&ndash;%&gt;--%>
+                <%--&lt;%&ndash;</c:set>&ndash;%&gt;--%>
+                <%--&lt;%&ndash;<c:if test="${not empty categoryError}">&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;<div class="alert alert-danger" role="alert" style="margin-top: 10px;">&ndash;%&gt;--%>
+                        <%--&lt;%&ndash;<form:errors path="category"></form:errors>&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;</div>&ndash;%&gt;--%>
+                <%--&lt;%&ndash;</c:if>&ndash;%&gt;--%>
+            <%--</div>--%>
+        <%--</spring:bind>--%>
 
         <%--<spring:bind path="img">--%>
             <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>

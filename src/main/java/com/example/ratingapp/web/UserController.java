@@ -2,12 +2,15 @@ package com.example.ratingapp.web;
 
 import com.example.ratingapp.model.Post;
 import com.example.ratingapp.model.User;
+import com.example.ratingapp.service.CategoryService;
 import com.example.ratingapp.service.PostService;
 import com.example.ratingapp.validator.PostValidator;
 import com.example.ratingapp.validator.UserValidator;
 import com.example.ratingapp.service.SecurityService;
 import com.example.ratingapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,18 +18,23 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.io.Console;
+import java.security.Principal;
+
 @Controller
 public class UserController {
     @Autowired
     private UserService userService;
-//    @Autowired
-//    private PostService postService;
     @Autowired
     private SecurityService securityService;
     @Autowired
     private UserValidator userValidator;
-//    @Autowired
-//    private PostValidator postValidator;
+    @Autowired
+    private PostService postService;
+    @Autowired
+    private PostValidator postValidator;
+    @Autowired
+    private CategoryService categoryService;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -58,6 +66,7 @@ public class UserController {
         if (logout != null)
             model.addAttribute("message", "You have been logged out successfully.");
 
+
         return "login";
     }
 
@@ -69,13 +78,16 @@ public class UserController {
     @RequestMapping(value = {"/addPhoto"}, method = RequestMethod.GET)
     public String addPhoto(Model model) {
         model.addAttribute("postForm", new Post());
+        model.addAttribute("categoryList", categoryService.getListOfCategory());
         return "addPhoto";
     }
 
     @RequestMapping(value = {"/addPhoto"}, method = RequestMethod.POST)
-    public String addPhotoPost(@ModelAttribute("postForm") Post postForm, BindingResult bindingResult, Model model) {
-//        postValidator.validate(postForm, bindingResult);
-//        postService.save(postForm);
+    public String addPhotoPost(@ModelAttribute("postForm") Post postForm, Principal principal, BindingResult bindingResult, Model model) {
+        //postValidator.validate(postForm, bindingResult);
+        postForm.setCategory(categoryService.findByName("Nature"));
+        postForm.setUser(userService.findByUsername(principal.getName()));
+        postService.save(postForm);
         return "welcome";
     }
 
