@@ -2,19 +2,20 @@ package com.example.ratingapp.web;
 
 import com.example.ratingapp.model.Post;
 import com.example.ratingapp.model.User;
-import com.example.ratingapp.service.CategoryService;
 import com.example.ratingapp.service.PostService;
 import com.example.ratingapp.validator.PostValidator;
 import com.example.ratingapp.validator.UserValidator;
 import com.example.ratingapp.service.SecurityService;
 import com.example.ratingapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -33,8 +34,6 @@ public class UserController {
     private PostService postService;
     @Autowired
     private PostValidator postValidator;
-    @Autowired
-    private CategoryService categoryService;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -72,47 +71,40 @@ public class UserController {
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
+        model.addAttribute("postList", postService.getPostList());
         return "welcome";
     }
 
     @RequestMapping(value = {"/addPhoto"}, method = RequestMethod.GET)
     public String addPhoto(Model model) {
         model.addAttribute("postForm", new Post());
-        model.addAttribute("categoryList", categoryService.getListOfCategory());
         return "addPhoto";
     }
 
     @RequestMapping(value = {"/addPhoto"}, method = RequestMethod.POST)
     public String addPhotoPost(@ModelAttribute("postForm") Post postForm, Principal principal, BindingResult bindingResult, Model model) {
         //postValidator.validate(postForm, bindingResult);
-        postForm.setCategory(categoryService.findByName("Nature"));
         postForm.setUser(userService.findByUsername(principal.getName()));
         postService.save(postForm);
         return "welcome";
     }
 
-//    @RequestMapping(value = "/admin/addEvent", method = RequestMethod.POST)
-//    public String adminAddEvent(@ModelAttribute("eventForm") Event eventForm, BindingResult bindingResult, Model model,
-//                                @RequestParam(value = "img") CommonsMultipartFile[] img) throws IOException {
-//        eventValidator.setEditable(false);
-//        eventValidator.validate(eventForm, bindingResult);
-//
-//        if (bindingResult.hasErrors()) {
-//            model.addAttribute("gunTypeList", eventService.getListOfGuns());
-//            model.addAttribute("refereeList", refereeService.getListOfReferees());
-//            return "/admin/addEvent";
-//        }
-//
-//        if (img != null && img.length > 0) {
-//            for (CommonsMultipartFile aFile : img) {
-//                eventForm.setImg(aFile.getBytes());
-//            }
-//        }
-//
-//        eventService.save(eventForm);
-//
-//        return "redirect:/admin/eventList";
-//    }
+
+    @RequestMapping(value = "/posts/{pageNumber}", method = RequestMethod.GET)
+    public String getRunbookPage(@PathVariable Integer pageNumber, Model model) {
+        Page<Post> page = postService.getPostLog(pageNumber);
+
+        int current = page.getNumber() + 1;
+        int begin = Math.max(1, current - 5);
+        int end = Math.min(begin + 10, page.getTotalPages());
+
+        model.addAttribute("postLog", page);
+        model.addAttribute("beginIndex", begin);
+        model.addAttribute("endIndex", end);
+        model.addAttribute("currentIndex", current);
+
+        return "postLog";
+    }
 
 
 

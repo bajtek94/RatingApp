@@ -49,37 +49,19 @@
             </div>
         </spring:bind>
 
-
-        <%--<spring:bind path="category">--%>
-            <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
-                <%--<form:select path="category" class="form-control" >--%>
-                    <%--<form:options items="${categoryList}" itemValue="id" itemLabel="name" />--%>
-                <%--</form:select>--%>
-
-                <%--&lt;%&ndash;<c:set var="categoryError">&ndash;%&gt;--%>
-                    <%--&lt;%&ndash;<form:errors path="category" />&ndash;%&gt;--%>
-                <%--&lt;%&ndash;</c:set>&ndash;%&gt;--%>
-                <%--&lt;%&ndash;<c:if test="${not empty categoryError}">&ndash;%&gt;--%>
-                    <%--&lt;%&ndash;<div class="alert alert-danger" role="alert" style="margin-top: 10px;">&ndash;%&gt;--%>
-                        <%--&lt;%&ndash;<form:errors path="category"></form:errors>&ndash;%&gt;--%>
-                    <%--&lt;%&ndash;</div>&ndash;%&gt;--%>
-                <%--&lt;%&ndash;</c:if>&ndash;%&gt;--%>
-            <%--</div>--%>
-        <%--</spring:bind>--%>
-
-        <%--<spring:bind path="img">--%>
-            <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
-                <%--<form:input type="file" path="img" name="img" class="form-control"></form:input>--%>
-                <%--<c:set var="imageError">--%>
-                    <%--<form:errors path="img" />--%>
-                <%--</c:set>--%>
-                <%--<c:if test="${not empty imageError}">--%>
-                    <%--<div class="alert alert-danger" role="alert" style="margin-top: 10px;">--%>
-                        <%--<form:errors path="img"></form:errors>--%>
-                    <%--</div>--%>
-                <%--</c:if>--%>
-            <%--</div>--%>
-        <%--</spring:bind>--%>
+        <spring:bind path="img">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="file" path="img" name="img" class="form-control"></form:input>
+                <c:set var="imageError">
+                    <form:errors path="img" />
+                </c:set>
+                <c:if test="${not empty imageError}">
+                    <div class="alert alert-danger" role="alert" style="margin-top: 10px;">
+                        <form:errors path="img"></form:errors>
+                    </div>
+                </c:if>
+            </div>
+        </spring:bind>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
         <a href="welcome" style="text-decoration: none"><button class="btn btn-lg btn-danger btn-block" type="button">Cancel</button></a>

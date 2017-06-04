@@ -1,5 +1,7 @@
 package com.example.ratingapp.model;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Set;
@@ -17,9 +19,23 @@ public class Post {
     private int dislikes;
     @Column(name = "user_id")
     private User user;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "img")
+    private byte[] img;
 //    private Calendar date;
-    @Column(name = "category_id")
-    private Category category;
+    @SuppressWarnings("unused")
+    private String base64;
+
+    @Transient
+    public String getBase64() {
+        this.base64 = Base64.encode(this.img);
+        return this.base64;
+    }
+
+    public void setBase64(String base64) {
+        this.base64 = base64;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -73,13 +89,11 @@ public class Post {
         this.user = user;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    public Category getCategory() {
-        return category;
+    public byte[] getImg() {
+        return img;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setImg(byte[] img) {
+        this.img = img;
     }
 }

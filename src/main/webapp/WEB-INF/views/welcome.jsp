@@ -77,100 +77,20 @@
     </div>
     <!-- /.row -->
 
-    <!-- Projects Row -->
-    <div class="row">
-        <div class="col-md-4 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="${contextPath}/resources/img/sample.jpg"  alt="sample">
-            </a>
-            <h3>
-                <a href="#">Photo Title</a>
-            </h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-        </div>
-        <div class="col-md-4 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="${contextPath}/resources/img/sample2.jpg"  alt="sample">
-            </a>
-            <h3>
-                <a href="#">Photo Title</a>
-            </h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-        </div>
-        <div class="col-md-4 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-            </a>
-            <h3>
-                <a href="#">Photo Title</a>
-            </h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-        </div>
-    </div>
-    <!-- /.row -->
 
-    <!-- Projects Row -->
     <div class="row">
+    <c:forEach items="${postList}" var="post">
         <div class="col-md-4 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-            </a>
+                <img class="img-responsive" src="data:image/png;base64,${post.base64}"/>
+                <%--<img src="${post.img}" width="40" height="40"/>--%>
+                <%--<img src="data:image/jpg;base64,<c:out value='${bean.imageByteArrayString}'/>" />--%>
             <h3>
-                <a href="#">Photo Title</a>
+                <a href="#">${post.title}</a>
             </h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+            <p>${post.description}</p>
         </div>
-        <div class="col-md-4 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-            </a>
-            <h3>
-                <a href="#">Photo Title</a>
-            </h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-        </div>
-        <div class="col-md-4 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-            </a>
-            <h3>
-                <a href="#">Photo Title</a>
-            </h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-        </div>
+    </c:forEach>
     </div>
-
-    <!-- Projects Row -->
-    <div class="row">
-        <div class="col-md-4 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-            </a>
-            <h3>
-                <a href="#">Photo Title</a>
-            </h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-        </div>
-        <div class="col-md-4 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-            </a>
-            <h3>
-                <a href="#">Photo Title</a>
-            </h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-        </div>
-        <div class="col-md-4 portfolio-item">
-            <a href="#">
-                <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-            </a>
-            <h3>
-                <a href="#">Photo Title</a>
-            </h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-        </div>
-    </div>
-    <!-- /.row -->
 
     <hr>
 

@@ -1,13 +1,5 @@
 CREATE DATABASE  IF NOT EXISTS `ratingapp`;
 USE `ratingapp`;
-# --------------------------------- CATEGORY -------------------------
-DROP TABLE IF EXISTS `category`;
-CREATE TABLE `category` (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 # --------------------------------- ROLE -------------------------
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
@@ -40,11 +32,10 @@ CREATE TABLE `post` (
   `likes` int(11) UNSIGNED NOT NULL,
   `dislikes` int(11) UNSIGNED NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
-  `category_id` int(11) UNSIGNED NOT NULL,
+  `img` LONGBLOB DEFAULT NULL,
 #   `date` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_post_userid` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_post_categoryid` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_post_userid` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 # --------------------------------- USER_ROLE -------------------------
 DROP TABLE IF EXISTS `user_role`;
