@@ -44,6 +44,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Page<Post> getPostLog(Integer pageNumber) {
-        return postRepository.findAll(new PageRequest(pageNumber - 1, PAGE_SIZE, Sort.Direction.ASC, "title"));
+        PageRequest request = new PageRequest(pageNumber - 1, PAGE_SIZE);
+        return postRepository.findAll(request);
     }
 }

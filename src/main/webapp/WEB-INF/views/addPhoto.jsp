@@ -31,7 +31,7 @@
 <div class="container">
     <img class="img-responsive center-block"
          src="${contextPath}/resources/img/Logo.png"  alt="Logo" style="margin-bottom: -20px">
-    <form:form method="POST" modelAttribute="postForm" class="form-signin">
+    <form:form method="POST" modelAttribute="postForm" class="form-signin" enctype="multipart/form-data">
         <h4 class="form-heading" style="text-align: center; color: #AAAAAA">Add new photo</h4>
         <spring:bind path="title">
             <div class="form-group ${status.error ? 'has-error' : ''}">
@@ -48,6 +48,7 @@
                     <%--<form:errors path="password"></form:errors>--%>
             </div>
         </spring:bind>
+
 
         <spring:bind path="img">
             <div class="form-group ${status.error ? 'has-error' : ''}">

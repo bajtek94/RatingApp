@@ -9,17 +9,21 @@ import com.example.ratingapp.service.SecurityService;
 import com.example.ratingapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import java.io.Console;
+import java.io.IOException;
 import java.security.Principal;
 
 @Controller
@@ -69,11 +73,28 @@ public class UserController {
         return "login";
     }
 
-    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
-    public String welcome(Model model) {
-        model.addAttribute("postList", postService.getPostList());
+    @RequestMapping(value = {"/{pageNumber}", "/welcome/{pageNumber}"}, method = RequestMethod.GET)
+    public String welcome(@PathVariable Integer pageNumber, Model model) {
+        Page<Post> page = postService.getPostLog(pageNumber);
+
+        int current = page.getNumber() + 1;
+        int begin = Math.max(1, current - 5);
+        int end = Math.min(begin + 10, page.getTotalPages());
+
+        model.addAttribute("postList", page.getContent());
+        model.addAttribute("welcome", page);
+        model.addAttribute("beginIndex", begin);
+        model.addAttribute("endIndex", end);
+        model.addAttribute("currentIndex", current);
+        //model.addAttribute("postList", postService.getPostList());
         return "welcome";
     }
+
+    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
+    public String welcomeRedirect() {
+        return "redirect:/1";
+    }
+
 
     @RequestMapping(value = {"/addPhoto"}, method = RequestMethod.GET)
     public String addPhoto(Model model) {
@@ -81,30 +102,34 @@ public class UserController {
         return "addPhoto";
     }
 
+    @InitBinder
+    protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws ServletException {
+        binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
+
+    }
+
     @RequestMapping(value = {"/addPhoto"}, method = RequestMethod.POST)
-    public String addPhotoPost(@ModelAttribute("postForm") Post postForm, Principal principal, BindingResult bindingResult, Model model) {
+    public String addPhotoPost(@ModelAttribute("postForm") Post postForm, Principal principal, BindingResult bindingResult, Model model,
+                               @RequestParam(value = "img") CommonsMultipartFile[] img) throws IOException {
         //postValidator.validate(postForm, bindingResult);
         postForm.setUser(userService.findByUsername(principal.getName()));
+
+//        if (bindingResult.hasErrors()) {
+//            model.addAttribute("gunTypeList", eventService.getListOfGuns());
+//            model.addAttribute("refereeList", refereeService.getListOfReferees());
+//            return "/admin/addEvent";
+//        }
+
+        if (img != null && img.length > 0) {
+            for (CommonsMultipartFile aFile : img) {
+                postForm.setImg(aFile.getBytes());
+            }
+        }
+
         postService.save(postForm);
         return "welcome";
     }
 
-
-    @RequestMapping(value = "/posts/{pageNumber}", method = RequestMethod.GET)
-    public String getRunbookPage(@PathVariable Integer pageNumber, Model model) {
-        Page<Post> page = postService.getPostLog(pageNumber);
-
-        int current = page.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, page.getTotalPages());
-
-        model.addAttribute("postLog", page);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-
-        return "postLog";
-    }
 
 
 

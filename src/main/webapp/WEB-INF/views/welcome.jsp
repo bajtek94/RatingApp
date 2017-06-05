@@ -3,6 +3,11 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
+<c:url var="firstUrl" value="/welcome/1" />
+<c:url var="lastUrl" value="/welcome/${welcome.totalPages}" />
+<c:url var="prevUrl" value="/welcome/${currentIndex - 1}" />
+<c:url var="nextUrl" value="/welcome/${currentIndex + 1}" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,6 +35,7 @@
 
 </head>
 <body>
+
 
 
 
@@ -94,35 +100,44 @@
 
     <hr>
 
-    <!-- Pagination -->
+
     <div class="row text-center">
         <div class="col-lg-12">
             <ul class="pagination">
-                <li>
-                    <a href="#">&laquo;</a>
-                </li>
-                <li class="active">
-                    <a href="#">1</a>
-                </li>
-                <li>
-                    <a href="#">2</a>
-                </li>
-                <li>
-                    <a href="#">3</a>
-                </li>
-                <li>
-                    <a href="#">4</a>
-                </li>
-                <li>
-                    <a href="#">5</a>
-                </li>
-                <li>
-                    <a href="#">&raquo;</a>
-                </li>
+                <c:choose>
+                    <c:when test="${currentIndex == 1}">
+                        <li class="disabled"><a href="#">&lt;&lt;</a></li>
+                        <li class="disabled"><a href="#">&lt;</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="${firstUrl}">&lt;&lt;</a></li>
+                        <li><a href="${prevUrl}">&lt;</a></li>
+                    </c:otherwise>
+                </c:choose>
+                <c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
+                    <c:url var="pageUrl" value="/welcome/${i}" />
+                    <c:choose>
+                        <c:when test="${i == currentIndex}">
+                            <li class="active"><a href="${pageUrl}"><c:out value="${i}" /></a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li><a href="${pageUrl}"><c:out value="${i}" /></a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                <c:choose>
+                    <c:when test="${currentIndex == welcome.totalPages}">
+                        <li class="disabled"><a href="#">&gt;</a></li>
+                        <li class="disabled"><a href="#">&gt;&gt;</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="${nextUrl}">&gt;</a></li>
+                        <li><a href="${lastUrl}">&gt;&gt;</a></li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </div>
     </div>
-    <!-- /.row -->
 
     <hr>
 
@@ -130,7 +145,7 @@
     <footer>
         <div class="row">
             <div class="col-lg-12">
-                <p>Copyright &copy; Your Website 2014</p>
+                <p>Copyright &copy; RateMyPic 2017</p>
             </div>
         </div>
         <!-- /.row -->
