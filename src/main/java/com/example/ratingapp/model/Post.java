@@ -12,6 +12,8 @@ import java.util.Set;
 @Entity
 @Table(name = "post")
 public class Post {
+    @Id
+    @Column(name = "id")
     private Long id;
     private String title;
     private String description;
@@ -29,8 +31,7 @@ public class Post {
 
     @Transient
     public String getBase64() {
-        this.base64 = Base64.encode(this.img);
-        return this.base64;
+        return this.base64 = Base64.encode(this.img);
     }
 
     public void setBase64(String base64) {

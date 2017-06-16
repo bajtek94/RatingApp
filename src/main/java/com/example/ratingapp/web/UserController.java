@@ -96,8 +96,9 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = {"/addPhoto"}, method = RequestMethod.GET)
-    public String addPhoto(Model model) {
+    @RequestMapping(value = { "/addPhoto" }, method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public String addPost(Model model) {
         model.addAttribute("postForm", new Post());
         return "addPhoto";
     }
@@ -108,17 +109,17 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = {"/addPhoto"}, method = RequestMethod.POST)
-    public String addPhotoPost(@ModelAttribute("postForm") Post postForm, Principal principal, BindingResult bindingResult, Model model,
-                               @RequestParam(value = "img") CommonsMultipartFile[] img) throws IOException {
-        //postValidator.validate(postForm, bindingResult);
-        postForm.setUser(userService.findByUsername(principal.getName()));
+    @RequestMapping(value = "/addPhoto", method = RequestMethod.POST)
+    public String addPhoto(@ModelAttribute("postForm") Post postForm, BindingResult bindingResult, Model model,
+                                @RequestParam(value = "img") CommonsMultipartFile[] img) throws IOException {
+        postValidator.validate(postForm, bindingResult);
 
 //        if (bindingResult.hasErrors()) {
-//            model.addAttribute("gunTypeList", eventService.getListOfGuns());
-//            model.addAttribute("refereeList", refereeService.getListOfReferees());
-//            return "/admin/addEvent";
+//            //model.addAttribute("gunTypeList", eventService.getListOfGuns());
+//            //model.addAttribute("refereeList", refereeService.getListOfReferees());
+//            return "/addPhoto";
 //        }
+
 
         if (img != null && img.length > 0) {
             for (CommonsMultipartFile aFile : img) {
@@ -127,7 +128,8 @@ public class UserController {
         }
 
         postService.save(postForm);
-        return "welcome";
+
+        return "redirect:/welcome";
     }
 
 

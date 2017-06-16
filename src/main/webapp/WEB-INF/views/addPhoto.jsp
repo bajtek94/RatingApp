@@ -31,7 +31,7 @@
 <div class="container">
     <img class="img-responsive center-block"
          src="${contextPath}/resources/img/Logo.png"  alt="Logo" style="margin-bottom: -20px">
-    <form:form method="POST" modelAttribute="postForm" class="form-signin" enctype="multipart/form-data">
+    <form:form  method="POST" modelAttribute="postForm" class="form-signin" enctype="multipart/form-data" >
         <h4 class="form-heading" style="text-align: center; color: #AAAAAA">Add new photo</h4>
         <spring:bind path="title">
             <div class="form-group ${status.error ? 'has-error' : ''}">
@@ -63,6 +63,7 @@
                 </c:if>
             </div>
         </spring:bind>
+
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
         <a href="welcome" style="text-decoration: none"><button class="btn btn-lg btn-danger btn-block" type="button">Cancel</button></a>
