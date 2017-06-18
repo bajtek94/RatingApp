@@ -14,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Create an account</title>
+    <title><spring:message code="register.title" /></title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
@@ -32,7 +32,7 @@
     <img class="img-responsive center-block"
          src="${contextPath}/resources/img/Logo.png"  alt="Logo" style="margin-bottom: -20px">
     <form:form method="POST" modelAttribute="userForm" class="form-signin">
-        <h4 class="form-heading" style="text-align: center; color: #AAAAAA">Create your account</h4>
+        <h4 class="form-heading" style="text-align: center; color: #AAAAAA"><spring:message code="register.header" /></h4>
         <spring:bind path="username">
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="text" path="username" class="form-control" placeholder="Username"
