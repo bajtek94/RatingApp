@@ -119,7 +119,28 @@ public class UserServiceImpl implements UserService {
         else {
             return userRepository.findByEverything(user.getUsername(), user.getEmail(), user.getName(), user.getLastName());
         }
+    }
 
-
+    @Override
+    public List<User> findByText(String searchText) {
+        List<User> list = new ArrayList<>();
+        List<User> tmp = new ArrayList<>();
+        tmp = userRepository.findListByUsername(searchText);
+        for (User u: tmp) {
+            list.add(u);
+        }
+        tmp = userRepository.findByEmail(searchText);
+        for (User u: tmp) {
+            list.add(u);
+        }
+        tmp = userRepository.findByName(searchText);
+        for (User u: tmp) {
+            list.add(u);
+        }
+        tmp = userRepository.findByLastName(searchText);
+        for (User u: tmp) {
+            list.add(u);
+        }
+        return list;
     }
 }

@@ -64,7 +64,7 @@
         </spring:bind>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Accept changes</button>
-        <a href="listUsers" style="text-decoration: none"><button class="btn btn-lg btn-danger btn-block" type="button">Cancel</button></a>
+        <a href="listUsers" style="text-decoration: none"><button class="btn btn-lg btn-danger btn-block" type="button">Back to list</button></a>
     </form:form>
 
 

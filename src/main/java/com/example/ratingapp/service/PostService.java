@@ -14,5 +14,8 @@ public interface PostService {
     void save(Post post);
     List<Post> getPostList();
     Page<Post> getPostLog(Integer pageNumber);
+    Post findById(String id);
+    void addLike(Post post);
+    void addDislike(Post post);
 
 }

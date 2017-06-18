@@ -52,7 +52,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="addPhoto">Add Photo</a>
+                <a class="navbar-brand" href="../addPhoto">Add Photo</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -60,16 +60,31 @@
                     <li>
                         <a href="#">Your Profile</a>
                     </li>
+                    <form method="POST" style="display: inline">
                     <li>
-                        <a href="#">Search</a>
+                        <div id="imaginary_container" style="padding-top: 10px; width: 600px">
+                            <div class="input-group stylish-input-group">
+
+                                    <input type="text" id="searchText" name="searchText" class="form-control"  placeholder="Search" style="display: inline">
+                                    <span class="input-group-addon">
+                                        <%--<a href="searchAll">--%>
+                                            <button href="searchAll" type="submit" style="display: inline">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                        <%--</a>--%>
+                                    </span>
+
+                            </div>
+                        </div>
                     </li>
+                    </form>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>
-    <a href="welcome">
+    <a href="../welcome">
         <img class="img-responsive center-block" src="${contextPath}/resources/img/Logo.png"  alt="Logo">
     </a>
 
@@ -94,6 +109,7 @@
                 <a href="#">${post.title}</a>
             </h3>
             <p>${post.description}</p>
+            <p><a href="<c:url value='/addLike-${post.id}' />"><button>Like</button></a> ${post.likes}, <a href="<c:url value='/addDislike-${post.id}' />"><button>Dislike</button></a> ${post.dislikes}</p>
         </div>
     </c:forEach>
     </div>

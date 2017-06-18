@@ -24,8 +24,6 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostRepository postRepository;
-    @Autowired
-    private UserService userService;
 
     @Override
     public void save(Post post) {
@@ -46,5 +44,24 @@ public class PostServiceImpl implements PostService {
     public Page<Post> getPostLog(Integer pageNumber) {
         PageRequest request = new PageRequest(pageNumber - 1, PAGE_SIZE);
         return postRepository.findAll(request);
+    }
+
+    @Override
+    public Post findById(String id) {
+        return postRepository.findOne(Long.parseLong(id));
+    }
+
+    @Override
+    public void addLike(Post post) {
+        Post tmp = postRepository.findOne(post.getId());
+        tmp.setLikes(post.getLikes() + 1);
+        postRepository.save(tmp);
+    }
+
+    @Override
+    public void addDislike(Post post) {
+        Post tmp = postRepository.findOne(post.getId());
+        tmp.setDislikes(post.getDislikes() + 1);
+        postRepository.save(tmp);
     }
 }

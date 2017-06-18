@@ -1,11 +1,14 @@
 package com.example.ratingapp.web;
 
+import com.example.ratingapp.model.Post;
 import com.example.ratingapp.model.User;
+import com.example.ratingapp.service.PostService;
 import com.example.ratingapp.service.SecurityService;
 import com.example.ratingapp.service.UserService;
 import com.example.ratingapp.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,6 +37,9 @@ public class AdminController {
     @Autowired
     private SecurityService securityService;
 
+    @Autowired
+    private PostService postService;
+
     @RequestMapping(value = {"/", "/welcome"})
     public String welcome(Model model){
         return"admin_welcome";
@@ -56,9 +62,26 @@ public class AdminController {
         return"admin_foundUsers";
     }
 
-    @RequestMapping(value = {"/listPosts"})
-    public String listPosts(Model model){
+    @RequestMapping(value = {"/listPosts/{pageNumber}"}, method = RequestMethod.GET)
+    public String listPosts(@PathVariable Integer pageNumber, Model model){
+        Page<Post> page = postService.getPostLog(pageNumber);
+
+        int current = page.getNumber() + 1;
+        int begin = Math.max(1, current - 5);
+        int end = Math.min(begin + 10, page.getTotalPages());
+
+        model.addAttribute("postList", page.getContent());
+        model.addAttribute("listPosts", page);
+        model.addAttribute("beginIndex", begin);
+        model.addAttribute("endIndex", end);
+        model.addAttribute("currentIndex", current);
+
         return"admin_listPosts";
+    }
+
+    @RequestMapping(value = {"/listPosts"}, method = RequestMethod.GET)
+    public String welcomeRedirect() {
+        return "redirect:/admin/listPosts/1";
     }
 
     @RequestMapping(value = {"/listUsers"}, method = RequestMethod.GET)

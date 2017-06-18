@@ -19,4 +19,6 @@ public interface UserService {
 
     List<User> findByFillFields(User user);
 
+    List<User> findByText(String searchText);
+
 }

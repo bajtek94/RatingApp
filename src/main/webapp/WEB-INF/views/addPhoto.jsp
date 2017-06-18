@@ -29,8 +29,9 @@
 <body>
 
 <div class="container">
-    <img class="img-responsive center-block"
-         src="${contextPath}/resources/img/Logo.png"  alt="Logo" style="margin-bottom: -20px">
+    <a href="welcome">
+        <img class="img-responsive center-block" src="${contextPath}/resources/img/Logo.png"  alt="Logo" style="margin-bottom: -20px">
+    </a>
     <form:form  method="POST" modelAttribute="postForm" class="form-signin" enctype="multipart/form-data" >
         <h4 class="form-heading" style="text-align: center; color: #AAAAAA">Add new photo</h4>
         <spring:bind path="title">

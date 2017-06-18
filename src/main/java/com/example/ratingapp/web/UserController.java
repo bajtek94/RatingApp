@@ -25,6 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.Console;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -114,11 +116,9 @@ public class UserController {
                                 @RequestParam(value = "img") CommonsMultipartFile[] img) throws IOException {
         postValidator.validate(postForm, bindingResult);
 
-//        if (bindingResult.hasErrors()) {
-//            //model.addAttribute("gunTypeList", eventService.getListOfGuns());
-//            //model.addAttribute("refereeList", refereeService.getListOfReferees());
-//            return "/addPhoto";
-//        }
+        if (bindingResult.hasErrors()) {
+            return "/addPhoto";
+        }
 
 
         if (img != null && img.length > 0) {
@@ -133,6 +133,31 @@ public class UserController {
     }
 
 
+    @RequestMapping(value = {"/", "/welcome", "/{pageNumber}", "/welcome/{pageNumber}"}, method = RequestMethod.POST)
+    public String searchAll(@RequestParam(value = "searchText") String searchText, Model model) {
+        model.addAttribute("searchText", searchText);
+        return "redirect:/searchAll";
+    }
+
+
+    @RequestMapping(value = {"/searchAll"}, method = RequestMethod.GET)
+    public String searchAlla(@ModelAttribute("searchText") String searchText, Model model) {
+        List<User> list = userService.findByText(searchText);
+        model.addAttribute("searchList", list);
+        return "/searchAll";
+    }
+
+    @RequestMapping(value = {"/addLike-{postId}"}, method = RequestMethod.GET)
+    public String addLike(@PathVariable String postId) {
+        postService.addLike(postService.findById(postId));
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = {"/addDislike-{postId}"}, method = RequestMethod.GET)
+    public String addDislike(@PathVariable String postId) {
+        postService.addDislike(postService.findById(postId));
+        return "redirect:/";
+    }
 
 
 }
