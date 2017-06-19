@@ -32,7 +32,7 @@
 
 <div class="container">
 
-    <a href="welcome"><img class="img-responsive center-block" src="${contextPath}/resources/img/Logo.png"  alt="Logo"></a>
+    <a href="../login"><img class="img-responsive center-block" src="${contextPath}/resources/img/Logo.png"  alt="Logo"></a>
     <form method="POST" action="${contextPath}/login" class="form-signin">
         <h4 class="form-heading" style="text-align: center; color: #AAAAAA"><spring:message code="login.header" /></h4>
 

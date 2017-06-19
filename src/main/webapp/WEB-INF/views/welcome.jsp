@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
@@ -57,27 +58,25 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">Your Profile</a>
-                    </li>
                     <form method="POST" style="display: inline">
-                    <li>
-                        <div id="imaginary_container" style="padding-top: 10px; width: 600px">
-                            <div class="input-group stylish-input-group">
-
-                                    <input type="text" id="searchText" name="searchText" class="form-control"  placeholder="Search" style="display: inline">
-                                    <span class="input-group-addon">
-                                        <%--<a href="searchAll">--%>
-                                            <button href="searchAll" type="submit" style="display: inline">
-                                                <span class="glyphicon glyphicon-search"></span>
-                                            </button>
-                                        <%--</a>--%>
-                                    </span>
-
+                    <li style="float: left">
+                        <div id="imaginary_container" style="padding-top: 10px; width: 800px">
+                            <div class="input-group stylish-input-group" >
+                                <input type="text" id="searchText" name="searchText" class="form-control"  placeholder="Search" style="display: inline">
+                                <span class="input-group-addon">
+                                    <%--<a href="searchAll">--%>
+                                        <button href="searchAll" type="submit" style="display: inline">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </button>
+                                    <%--</a>--%>
+                                </span>
                             </div>
                         </div>
                     </li>
                     </form>
+                    <li>
+                        <a href="../login?logout"><button class="btn btn-default" >${pageContext.request.userPrincipal.name}| Logout</button></a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
