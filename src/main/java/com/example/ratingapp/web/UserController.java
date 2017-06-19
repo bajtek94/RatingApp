@@ -102,7 +102,6 @@ public class UserController {
 
 
     @RequestMapping(value = { "/addPhoto" }, method = RequestMethod.GET)
-    @PreAuthorize("hasRole('ROLE_USER')")
     public String addPost(Model model) {
         model.addAttribute("postForm", new Post());
         return "addPhoto";
@@ -115,31 +114,18 @@ public class UserController {
     }
 
     @RequestMapping(value = "/addPhoto", method = RequestMethod.POST)
-    public String addPhoto(@ModelAttribute("postForm") Post postForm, BindingResult bindingResult, Model model) throws IOException {
+    public String addPhoto(@ModelAttribute("postForm") Post postForm, BindingResult bindingResult, Model model, @RequestParam(value = "img") CommonsMultipartFile[] img) throws IOException {
+        // , @RequestParam(value = "img") CommonsMultipartFile[] img
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName(); //get logged in username
+        postForm.setUser(userService.findByUsername(name));
 
-        postForm = new Post();
-        postForm.setUser(userService.findById("1"));
-        postForm.setDescription("Przykladowy opis");
-        postForm.setTitle("Przykladowy tytul");
-        File file = new File("C:\\Users\\Bajtek\\Downloads\\TexturesCom_WoodPlanksFences0019_S.jpg");
-        byte[] byteFile = new byte[(int)file.length()];
-        try{
-            FileInputStream fs = new FileInputStream(file);
-            fs.read(byteFile);
-            fs.close();
+        if (img != null && img.length > 0) {
+            for (CommonsMultipartFile aFile : img) {
+                postForm.setImg(aFile.getBytes());
+            }
         }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        postForm.setImg(byteFile);
-
-//        postValidator.validate(postForm, bindingResult);
-//
-//        if (bindingResult.hasErrors()) {
-//            return "/addPhoto";
-//        }
-
 
         postService.save(postForm);
 
