@@ -36,7 +36,7 @@
         <h4 class="form-heading" style="text-align: center; color: #AAAAAA">Add new photo</h4>
         <spring:bind path="title">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="title" class="form-control" placeholder="Title"
+                <form:input id="title" type="text" path="title" class="form-control" placeholder="Title"
                             autofocus="true"></form:input>
                 <%--<form:errors path="username"></form:errors>--%>
             </div>
@@ -65,8 +65,10 @@
             </div>
         </spring:bind>
 
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+            <span class="glyphicon glyphicon-plus"> Update</span>
+        </button>
+        <%--<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>--%>
         <a href="welcome" style="text-decoration: none"><button class="btn btn-lg btn-danger btn-block" type="button">Cancel</button></a>
     </form:form>
 

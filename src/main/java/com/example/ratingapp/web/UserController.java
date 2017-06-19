@@ -24,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Console;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -113,20 +115,31 @@ public class UserController {
     }
 
     @RequestMapping(value = "/addPhoto", method = RequestMethod.POST)
-    public String addPhoto(@ModelAttribute("postForm") Post postForm, BindingResult bindingResult, Model model,
-                                @RequestParam(value = "img") CommonsMultipartFile[] img) throws IOException {
-        postValidator.validate(postForm, bindingResult);
+    public String addPhoto(@ModelAttribute("postForm") Post postForm, BindingResult bindingResult, Model model) throws IOException {
 
-        if (bindingResult.hasErrors()) {
-            return "/addPhoto";
+
+        postForm = new Post();
+        postForm.setUser(userService.findById("1"));
+        postForm.setDescription("Przykladowy opis");
+        postForm.setTitle("Przykladowy tytul");
+        File file = new File("C:\\Users\\Bajtek\\Downloads\\TexturesCom_WoodPlanksFences0019_S.jpg");
+        byte[] byteFile = new byte[(int)file.length()];
+        try{
+            FileInputStream fs = new FileInputStream(file);
+            fs.read(byteFile);
+            fs.close();
         }
-
-
-        if (img != null && img.length > 0) {
-            for (CommonsMultipartFile aFile : img) {
-                postForm.setImg(aFile.getBytes());
-            }
+        catch (Exception e) {
+            e.printStackTrace();
         }
+        postForm.setImg(byteFile);
+
+//        postValidator.validate(postForm, bindingResult);
+//
+//        if (bindingResult.hasErrors()) {
+//            return "/addPhoto";
+//        }
+
 
         postService.save(postForm);
 
