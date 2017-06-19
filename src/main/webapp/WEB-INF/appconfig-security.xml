@@ -9,8 +9,13 @@
 
     <http auto-config="true">
         <intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/admin/*/*" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/welcome" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/welcome/*" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/addPhoto" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/searchAll" access="hasRole('ROLE_USER')"/>
+        <access-denied-handler error-page="/403" />
         <form-login login-page="/login"
                     authentication-success-handler-ref="authenticationHandler"
                     authentication-failure-url="/login?error"

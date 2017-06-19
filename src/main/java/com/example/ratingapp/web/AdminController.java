@@ -118,4 +118,9 @@ public class AdminController {
 
     }
 
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public String accesssDenied() {
+        return "403";
+    }
+
 }

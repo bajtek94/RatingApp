@@ -19,6 +19,7 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -159,5 +160,9 @@ public class UserController {
         return "redirect:/";
     }
 
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public String accesssDenied() {
+        return "403";
+    }
 
 }
