@@ -20,7 +20,7 @@ import java.util.Set;
 @Service
 @Transactional
 public class PostServiceImpl implements PostService {
-    private static final int PAGE_SIZE = 6;
+    private static final int PAGE_SIZE = 3;
 
     @Autowired
     private PostRepository postRepository;
