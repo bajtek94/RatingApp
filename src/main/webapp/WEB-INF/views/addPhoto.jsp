@@ -38,7 +38,7 @@
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input id="title" type="text" path="title" class="form-control" placeholder="Title"
                             autofocus="true"></form:input>
-                <%--<form:errors path="username"></form:errors>--%>
+                <form:errors path="title"></form:errors>
             </div>
         </spring:bind>
 
@@ -46,7 +46,7 @@
             <div class="form-group ${status.error ? 'has-error' : ''}" >
                 <%--<form:input type="text" path="description" class="form-control" placeholder="Description" style="height: 200px"></form:input>--%>
                 <form:textarea path="description" class="form-control" placeholder="Description" style="height: 200px"></form:textarea>
-                    <%--<form:errors path="password"></form:errors>--%>
+                    <form:errors path="description"></form:errors>
             </div>
         </spring:bind>
 
@@ -54,21 +54,11 @@
         <spring:bind path="img">
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="file" path="img" name="img" class="form-control"></form:input>
-                <c:set var="imageError">
-                    <form:errors path="img" />
-                </c:set>
-                <c:if test="${not empty imageError}">
-                    <div class="alert alert-danger" role="alert" style="margin-top: 10px;">
-                        <form:errors path="img"></form:errors>
-                    </div>
-                </c:if>
+                <form:errors path="img"></form:errors>
             </div>
         </spring:bind>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">
-            <span class="glyphicon glyphicon-plus"> Update</span>
-        </button>
-        <%--<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>--%>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
         <a href="welcome" style="text-decoration: none"><button class="btn btn-lg btn-danger btn-block" type="button">Cancel</button></a>
     </form:form>
 

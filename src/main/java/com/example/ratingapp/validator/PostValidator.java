@@ -28,11 +28,12 @@ public class PostValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "NotEmpty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "img", "NotEmpty");
         if(post.getTitle().length() < 3 || post.getTitle().length() > 40) {
             errors.rejectValue("title", "Post.title.size");
         }
         if(post.getDescription().length() < 3 || post.getDescription().length() > 120) {
-            errors.rejectValue("description", "Post.title.size");
+            errors.rejectValue("description", "Post.description");
         }
     }
 }

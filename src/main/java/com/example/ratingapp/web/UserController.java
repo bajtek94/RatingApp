@@ -115,8 +115,10 @@ public class UserController {
 
     @RequestMapping(value = "/addPhoto", method = RequestMethod.POST)
     public String addPhoto(@ModelAttribute("postForm") Post postForm, BindingResult bindingResult, Model model, @RequestParam(value = "img") CommonsMultipartFile[] img) throws IOException {
-        // , @RequestParam(value = "img") CommonsMultipartFile[] img
-
+        postValidator.validate(postForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "addPhoto";
+        }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         postForm.setUser(userService.findByUsername(name));
