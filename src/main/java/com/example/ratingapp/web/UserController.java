@@ -129,7 +129,7 @@ public class UserController {
 
         postService.save(postForm);
 
-        return "redirect:/welcome";
+        return "redirect:/welcome/";
     }
 
 
