@@ -17,5 +17,9 @@ public interface PostService {
     Post findById(String id);
     void addLike(Post post);
     void addDislike(Post post);
-
+    List<Post> findByText(String searchText);
+    List<Post> findByTitle(String searchText);
+    List<Post> findByDescription(String searchText);
+    void deletePostById(String id);
+    void updatePost(Post postForm);
 }

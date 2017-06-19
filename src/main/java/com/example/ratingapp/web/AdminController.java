@@ -5,6 +5,7 @@ import com.example.ratingapp.model.User;
 import com.example.ratingapp.service.PostService;
 import com.example.ratingapp.service.SecurityService;
 import com.example.ratingapp.service.UserService;
+import com.example.ratingapp.validator.PostValidator;
 import com.example.ratingapp.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +36,9 @@ public class AdminController {
     private UserValidator userValidator;
 
     @Autowired
+    private PostValidator postValidator;
+
+    @Autowired
     private SecurityService securityService;
 
     @Autowired
@@ -43,11 +47,6 @@ public class AdminController {
     @RequestMapping(value = {"/", "/welcome"})
     public String welcome(Model model){
         return"admin_welcome";
-    }
-
-    @RequestMapping(value = {"/findPost"})
-    public String findPost(Model model){
-        return"admin_findPost";
     }
 
     @RequestMapping(value = {"/findUser"}, method = RequestMethod.GET)
@@ -60,6 +59,21 @@ public class AdminController {
         List<User> list = userService.findByFillFields(searchForm);
         model.addAttribute("listOfFound", list);
         return"admin_foundUsers";
+    }
+    @RequestMapping(value = {"/findPost"}, method = RequestMethod.GET)
+    public String findPost(Model model){
+        model.addAttribute("searchForm", new Post());
+        return"admin_findPost";
+    }
+    @RequestMapping(value = {"/findPost"}, method = RequestMethod.POST)
+    public String findPostP(@ModelAttribute("searchForm") Post searchForm, Model model){
+        List<Post> list = postService.findByTitle(searchForm.getTitle());
+        List<Post> listD = postService.findByDescription(searchForm.getDescription());
+        for (Post p: listD) {
+            list.add(p);
+        }
+        model.addAttribute("listOfFound", list);
+        return"admin_foundPosts";
     }
 
     @RequestMapping(value = {"/listPosts/{pageNumber}"}, method = RequestMethod.GET)
@@ -123,4 +137,29 @@ public class AdminController {
         return "403";
     }
 
+    @RequestMapping(value = {"/deletePost-{postId}"}, method = RequestMethod.GET)
+    public String deletePost(@PathVariable String postId) {
+        postService.deletePostById(postId);
+        return "redirect:/admin/listPosts";
+    }
+    @RequestMapping(value = {"/editPost-{postId}"}, method = RequestMethod.GET)
+    public String editPost(@PathVariable String postId, Model model) {
+        Post post = postService.findById(postId);
+        model.addAttribute("postForm", post);
+        return "admin_editPost";
+    }
+
+    @RequestMapping(value = { "/editPost-{postId}" }, method = RequestMethod.POST)
+    public String changePostInfo(@ModelAttribute("postForm") Post postForm, BindingResult bindingResult, Model model, @PathVariable String postId) {
+        postForm.setId(Long.parseLong(postId));
+        postValidator.validate(postForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "admin_editPost";
+        }
+
+        postService.updatePost(postForm);
+
+        return "redirect:/admin/listPosts";
+
+    }
 }

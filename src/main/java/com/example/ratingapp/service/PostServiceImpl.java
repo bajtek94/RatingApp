@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -63,5 +64,44 @@ public class PostServiceImpl implements PostService {
         Post tmp = postRepository.findOne(post.getId());
         tmp.setDislikes(post.getDislikes() + 1);
         postRepository.save(tmp);
+    }
+
+    @Override
+    public List<Post> findByText(String searchText) {
+        List<Post> list = new ArrayList<>();
+        List<Post> tmp = new ArrayList<>();
+        tmp = postRepository.findByTitle(searchText);
+        for (Post p: tmp) {
+            list.add(p);
+        }
+        return list;
+    }
+
+    @Override
+    public List<Post> findByTitle(String searchText) {
+        return postRepository.findByTitle(searchText);
+    }
+
+    @Override
+    public List<Post> findByDescription(String searchText) {
+        return postRepository.findByDescription(searchText);
+    }
+
+    @Override
+    public void deletePostById(String id) {
+        Post post = postRepository.findOne(Long.parseLong(id));
+        if(post != null) {
+            postRepository.delete(post.getId());
+        }
+    }
+
+    @Override
+    public void updatePost(Post post) {
+        Post postTmp = postRepository.findOne(post.getId());
+        if(postTmp != null) {
+            postTmp.setTitle(post.getTitle());
+            postTmp.setDescription(post.getDescription());
+        }
+        postRepository.save(postTmp);
     }
 }

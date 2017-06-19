@@ -143,7 +143,9 @@ public class UserController {
     @RequestMapping(value = {"/searchAll"}, method = RequestMethod.GET)
     public String searchAlla(@ModelAttribute("searchText") String searchText, Model model) {
         List<User> list = userService.findByText(searchText);
+        List<Post> listP = postService.findByText(searchText);
         model.addAttribute("searchList", list);
+        model.addAttribute("searchListP", listP);
         return "/searchAll";
     }
 
@@ -163,5 +165,7 @@ public class UserController {
     public String accesssDenied() {
         return "403";
     }
+
+
 
 }

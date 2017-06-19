@@ -30,7 +30,7 @@
 <div class="container">
 
     <a href="welcome"><img class="img-responsive center-block" src="${contextPath}/resources/img/Logo.png"  alt="Logo"></a>
-    <c:if test="${!searchList.isEmpty()}">
+    <c:if test="${!listOfFound.isEmpty()}">
         <h4 class="form-heading" style="text-align: center; color: #AAAAAA">List of found users:</h4>
 
 
@@ -47,28 +47,30 @@
                                     <thead>
                                     <tr>
                                         <th>id</th>
-                                        <th>Username</th>
-                                        <th>Name</th>
-                                        <th>Last name</th>
-                                        <th>Email</th>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Image</th>
+                                        <th>Actions</th>
                                         <%-- <sec:authorize access="hasRole('ROLE_ADMIN')"><th>#</th></sec:authorize> --%>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${searchList}" var="user">
+                                    <c:forEach items="${listOfFound}" var="post">
                                         <tr>
-                                            <td>${user.id}</td>
-                                            <td>${user.username}</td>
-                                            <td>${user.name}</td>
-                                            <td>${user.lastName}</td>
-                                            <td>${user.email}</td>
+                                            <td>${post.id}</td>
+                                            <td>${post.title}</td>
+                                            <td>${post.description}</td>
+                                            <td><img class="img-responsive" src="data:image/png;base64,${post.base64}" width="80" height="80"/></td>
+                                            <td>
+                                                <a href="<c:url value='/admin/deletePost-${post.id}' />" class="btn btn-danger">Delete</a>
+                                                <a href="<c:url value='/admin/editPost-${post.id}' />" class="btn btn-primary">Edit</a>
+                                            </td>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
                                 </table>
 
                         </div>
-
                     </div>
                     <!-- /placeholders -->
                 </div>
@@ -76,55 +78,8 @@
             </div>
         </div>
     </c:if>
-    <c:if test="${searchList.isEmpty()}">
-        <h2 class="form-heading" style="text-align: center; color: #AAAAAA">No user found.</h2>
-    </c:if>
-    <c:if test="${!searchListP.isEmpty()}">
-        <h4 class="form-heading" style="text-align: center; color: #AAAAAA">List of found posts:</h4>
-
-
-        <div class="container-fluid">
-            <div class="row">
-
-                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-
-                    <div class="row placeholders">
-                        <div class="table-responsive">
-
-
-                            <table class="table table-hover table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>id</th>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Image</th>
-                                        <%-- <sec:authorize access="hasRole('ROLE_ADMIN')"><th>#</th></sec:authorize> --%>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach items="${searchListP}" var="post">
-                                    <tr>
-                                        <td>${post.id}</td>
-                                        <td>${post.title}</td>
-                                        <td>${post.description}</td>
-                                        <td><img class="img-responsive" src="data:image/png;base64,${post.base64}" width="80" height="80"/></td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-
-                        </div>
-
-                    </div>
-                    <!-- /placeholders -->
-                </div>
-                <!-- /main -->
-            </div>
-        </div>
-    </c:if>
-    <c:if test="${searchListP.isEmpty()}">
-        <h2 class="form-heading" style="text-align: center; color: #AAAAAA">No post found.</h2>
+    <c:if test="${listOfFound.isEmpty()}">
+        <h2 class="form-heading" style="text-align: center; color: #AAAAAA">No match results.</h2>
     </c:if>
     <!-- /container -->
 
